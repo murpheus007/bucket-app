@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { dbBucket } from '../lib/bucket.js';
-import ShowModal from '../components/showModal.jsxowModal.jsx';
+import ShowModal from '../components/ShowModal.jsx';
 
 const FormPage = () => {
    const navigate = useNavigate();
