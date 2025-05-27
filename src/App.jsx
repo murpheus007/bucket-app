@@ -5,8 +5,8 @@ import ImagesPage from './pages/ImagesPage.jsx';
 
 function App() {
    return (
-      <div>
-         <h1 className='glow_text text-4xl font-bold text-center  m-8'>
+      <div className='p-2'>
+         <h1 className='glow_text text-4xl font-bold text-center m-8'>
             HELLO APPWRITE BUCKETS
          </h1>
          <p className='text-md text-blue-950 text-center m-4 max-w-md mx-auto'>

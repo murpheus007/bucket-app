@@ -6,10 +6,12 @@ import { formatDate } from '../components/formatDate.js';
 
 function ImagesPage() {
    const [items, setItems] = useState([]);
+   const [loading, setLoading] = useState(false);
    const navigate = useNavigate();
 
    useEffect(() => {
       const fetchData = async () => {
+         setLoading(true);
          try {
             // 1. Get all images (files)
             const filesRes = await dbBucket.getImages();
@@ -35,6 +37,7 @@ function ImagesPage() {
             });
 
             setItems(merged);
+            setLoading(false);
          } catch (error) {
             console.error('Failed to fetch items:', error);
          }
@@ -42,6 +45,9 @@ function ImagesPage() {
 
       fetchData();
    }, []);
+
+
+   if (loading) return <p className='glow_text text-4xl font-bold text-center m-8'> Loading... </p>
 
    return (
       <div className='flex flex-col items-center justify-center'>
@@ -51,7 +57,7 @@ function ImagesPage() {
             Upload your own image?
          </button>
 
-         <div className='auto-fit-grid gap-2 p-4 max-w-2xl'>
+         <div className='auto-fit-grid gap-2 p-4 w-full md:max-w-2xl'>
             {items.map(
                (item) =>
                   item.file && (
@@ -63,21 +69,24 @@ function ImagesPage() {
                            alt={item.file.name}
                            className='w-full object-cover aspect-video'
                         />
-                        <div className='mt-2 text-sm p-2'>
-                           <div className='flex flex-col justify-start items-start'>
-                              <p className='text-blue-950 font-medium'>
-                                 Who Posted?
-                              </p>
-                              <p className='font-bold'>{item.nickname}</p>
-                           </div>
-                           <div className='flex flex-col justify-start items-start'>
-                              <p className='text-blue-950 font-medium'>
-                                 {' '}
-                                 Reason why?
-                              </p>
-                              <p className='font-bold'>{item.description}</p>
-                           </div>
-                           <div className='self-end text-right font-medium text-blue-600'>
+                        <div className=' mt-2 text-sm p-2'>
+                           <>
+                              <div className='flex flex-col justify-start items-start '>
+                                 <p className='text-blue-950 font-medium'>
+                                    Who Posted?
+                                 </p>
+                                 <p className='font-bold'>{item.nickname}</p>
+                              </div>
+                              <div className='flex flex-col justify-start items-start'>
+                                 <p className='text-blue-950 font-medium'>
+                                    {' '}
+                                    Reason why?
+                                 </p>
+                                 <p className='font-bold'>{item.description}</p>
+                              </div>
+                           </>
+
+                           <div className='self-end text-right font-medium text-blue-600 text-[10px] mt-auto'>
                               <p>{formatDate(item.timestamp)}</p>
                            </div>
                         </div>
